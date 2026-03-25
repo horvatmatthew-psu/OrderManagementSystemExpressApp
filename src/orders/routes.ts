@@ -33,4 +33,19 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
+router.patch("/:id", async (req, res) => {
+    const { id } = req.params;
+    const updateData = req.body;
+    try {
+        const result = await OrderController.patchOrderById(id, updateData);
+        if (result.success) {
+            res.json(result);
+        } else {
+            res.status(404).json(result);
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error updating order", error });
+    }
+});
+
 export default router;

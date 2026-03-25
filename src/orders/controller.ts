@@ -40,4 +40,19 @@ export const deleteOrderById = async (id: string) => {
         throw new Error("Error deleting order by ID: " + error);
     }
 }
+
+export const patchOrderById = async (id: string, updateData: any) => {
+    try {
+        const order = await Order.findByPk(id);
+        if (order) {
+            const tempOrder = { ... order, ...updateData };
+            await order.update(tempOrder);
+            return { success: true, data: order };
+        } else {
+            return { success: false, message: "Order not found" };
+        } 
+    } catch (error) {
+            throw new Error("Error updating order by ID: " + error);
+    }    
+}
    
