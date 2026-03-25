@@ -26,4 +26,18 @@ export const getOrderById = async (id: string) => {
         throw new Error("Error fetching order by ID: " + error);
     }
 }
+
+export const deleteOrderById = async (id: string) => {
+    try {
+        const order = await Order.findByPk(id);
+        if (order) {
+            await order.destroy();
+            return { success: true, message: "Order deleted successfully" };
+        } else {
+            return { success: false, message: "Order not found" };
+        }
+    } catch (error) {
+        throw new Error("Error deleting order by ID: " + error);
+    }
+}
    

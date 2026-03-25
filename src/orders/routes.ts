@@ -19,4 +19,18 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await OrderController.deleteOrderById(id);
+        if (result.success) {
+            res.json(result);
+        } else {
+            res.status(404).json(result);
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error deleting order", error });
+    }
+});
+
 export default router;
