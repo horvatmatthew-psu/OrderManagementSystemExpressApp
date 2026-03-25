@@ -3,18 +3,23 @@ import defineOrder from "../common/models/Order";
 
 const Order = defineOrder(sequelize);
 
-export const getAllOrders = async (req: any, res: any) => {
-    const orders = await Order.findAll();
-    res.json({success: true, data:orders});
+export const getAllOrders = async () => {
+    try {
+        const orders = await Order.findAll();
+        return orders;
+    } catch (error) {
+        throw new Error("Error fetching orders: " + error);
+    }
 }
 
-export const addNewOrder = async (req: any, res: any) => {
-    const { customerName, orderDate, totalAmount, status } = req.body;
+export const addNewOrder = async (customerName: string, totalAmount: number) => {
     try {
+        const orderDate = new Date();
+        const status = "Pending";
         const newOrder = await Order.create({ customerName, orderDate, totalAmount, status });
-        res.json({ success: true, data: newOrder });
+        return newOrder;
     } catch (error) {
-        res.status(500).json({ success: false, message: "Error creating order", error });
+        throw new Error("Error creating new order: " + error);
     }
 }
 
