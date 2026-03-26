@@ -1,4 +1,7 @@
 import { Router } from "express";
+import Ajv from 'ajv';
+
+
 import * as OrderController from "./controller";
 
 const router = Router();
@@ -13,7 +16,21 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    const { customerName, totalAmount } = req.body;
+     const { customerName, totalAmount } = req.body;
+     const ajv = new Ajv();
+     const schema = {
+        type: 'object',
+        required: ['customerName', 'totalAmount'],
+        properties: {
+        customerName: { type: 'string', minLength: 3 },
+        totalAmount: { type: 'number', minimum: 0 }
+    }
+};
+const validate = ajv.compile(schema);
+if (!validate(req.body)) {
+  return res.status(400).json({ error: 'Invalid order detail', details: validate.errors });
+}
+   
     try {
         const newOrder = await OrderController.addNewOrder(customerName, totalAmount);
         res.status(201).json({ success: true, message: "Order created successfully" });
