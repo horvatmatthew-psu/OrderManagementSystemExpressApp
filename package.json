@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "Repository For Module 9 Assignment to Create a Order Management System for CSC820",
   "main": "app.ts",
+
   "scripts": {
-  "start": "node dist/app.js",
-  "build": "tsc -p .",
-  "dev": "nodemon src/app.ts"
+    "start": "node dist/app.js",
+    "build": "tsc -p .",
+    "dev": "nodemon src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,6 +16,8 @@
     "@types/express": "^5.0.6",
     "@types/node": "^25.5.0",
     "ajv": "^8.18.0",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^3.0.1",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.14",
