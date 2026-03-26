@@ -16,8 +16,11 @@ export const addNewOrder = async (customerName: string, totalAmount: number) => 
     try {
         const orderDate = new Date();
         const status = "Pending";
-        const newOrder = await Order.create({ customerName, orderDate, totalAmount, status });
-        return newOrder;
+         await new Promise(resolve => 
+            setTimeout(resolve, 2000)).then(async() => {
+            const newOrder = await Order.create({ customerName, orderDate, totalAmount, status });
+            return newOrder;
+        });
     } catch (error) {
         throw new Error("Error creating new order: " + error);
     }
