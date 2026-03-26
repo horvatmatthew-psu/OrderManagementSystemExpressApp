@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Repository For Module 9 Assignment to Create a Order Management System for CSC820",
   "main": "app.ts",
-
   "scripts": {
     "start": "node dist/app.js",
     "build": "tsc -p .",
@@ -23,7 +22,13 @@
     "nodemon": "^3.1.14",
     "sequelize": "^6.37.8",
     "sqlite3": "^6.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.2"
+  },
+  "devDependencies": {
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8"
   }
 }

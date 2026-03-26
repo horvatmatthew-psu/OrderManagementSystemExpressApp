@@ -1,4 +1,6 @@
 import express, { Application, Request, Response } from "express";
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './swaggerConfig';
 import orderRoutes from "./orders/routes";
 import sequelize from "./common/database";
 import defineOrder from "./common/models/Order";
@@ -18,6 +20,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Route to export the JSON file
+app.get('/swagger.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec); // 'swaggerSpec' is your generated spec object
+});
 
 app.use('/orders', orderRoutes);
 
