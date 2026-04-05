@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: order-management-app
-        image: your-dockerhub-username/ordermgmtexpress:latest
+        image: 1025software/ordermgmtexpress:latest
         ports:
         - containerPort: 3000
         volumeMounts:
