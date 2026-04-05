@@ -1,7 +1,13 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-app
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sqlite-storage
+  namespace: my-app
 spec:
   accessModes:
     - ReadWriteOnce
@@ -13,6 +19,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order-management-app
+  namespace: my-app
 spec:
   replicas: 1
   selector:
@@ -25,7 +32,7 @@ spec:
     spec:
       containers:
       - name: order-management-app
-        image: 1025software/ordermgmtexpress:latest
+        image: your-dockerhub-username/ordermgmtexpress:latest
         ports:
         - containerPort: 3000
         volumeMounts:
