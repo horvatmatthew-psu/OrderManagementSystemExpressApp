@@ -16,8 +16,11 @@ sequelize.sync().then(() => {
 const app: Application = express();
 const port = 3000; // The port your express server will be running on.
 
+app.set('trust proxy', true);
+
 // Enable CORS for browser clients
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
+app.options('*', cors({ origin: true, credentials: true }));
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));
