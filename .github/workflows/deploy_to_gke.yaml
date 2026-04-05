@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'gke-deployment.yaml'
-      - '.github/workflows/deploy-to-gke.yml'
-      - 'Dockerfile'
   workflow_dispatch:
 
 jobs:
