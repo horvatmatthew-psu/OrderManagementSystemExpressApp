@@ -4,15 +4,11 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'gke-deployment.yaml'
-      - '.github/workflows/deploy-to-gke.yml'
-      - 'Dockerfile'
   workflow_dispatch:
 
 jobs:
   build-docker-image:
-    uses: ./.github/workflows/docker-build-push.yml
+    uses: ./.github/workflows/build_docker.yaml
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

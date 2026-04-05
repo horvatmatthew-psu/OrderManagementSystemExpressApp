@@ -42,7 +42,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: <your-dockerhub-username>/<image-name>:<tag>
+        image: 1025software/ordermgmtexpress:latest
         imagePullPolicy: IfNotPresent
         ports:
         - name: http
@@ -57,7 +57,7 @@ spec:
             cpu: "200m"
         volumeMounts:
         - name: db-storage
-          mountPath: /app/storage/db
+          mountPath: /src/storage
         livenessProbe:
           httpGet:
             path: /
