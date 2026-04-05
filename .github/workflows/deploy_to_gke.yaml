@@ -42,10 +42,11 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f gke-deployment.yaml --validate=false
+          kubectl apply -f deployment.yaml --validate=false
+          kubectl apply -f service.yaml --validate=false
 
       - name: Verify deployment
         run: |
-          kubectl rollout status deployment/my-app-deployment -n my-app --timeout=5m
-          kubectl get pods -n my-app
-          kubectl get svc -n my-app
+          kubectl rollout status deployment/order-management-app --timeout=5m
+          kubectl get pods
+          kubectl get svc

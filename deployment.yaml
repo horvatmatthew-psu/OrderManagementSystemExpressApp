@@ -35,16 +35,3 @@ spec:
       - name: sqlite-storage
         persistentVolumeClaim:
           claimName: sqlite-storage
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: order-management-service
-spec:
-  selector:
-    app: order-management-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
-  type: LoadBalancer

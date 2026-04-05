@@ -1,4 +1,5 @@
 import express, { Application, Request, Response } from "express";
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swaggerConfig';
 import orderRoutes from "./orders/routes";
@@ -14,6 +15,9 @@ sequelize.sync().then(() => {
 
 const app: Application = express();
 const port = 3000; // The port your express server will be running on.
+
+// Enable CORS for browser clients
+app.use(cors());
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));
