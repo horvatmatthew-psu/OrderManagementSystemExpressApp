@@ -1,24 +1,24 @@
-stages:
-  - build
-  - deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # Authenticate to Google Cloud
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ vars.GCP_SERVICE_ACCOUNT_KEY }} # Or use Workload Identity
 
-build:
-  stage: build
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - docker build -t 1025software/ordermgmtexpress:latest .
-    - docker push 1025software/ordermgmtexpress:latest
+      # Set up GKE credentials
+      - uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: ordermgmtsystem
+          location: us-east1
 
-deploy:
-  stage: deploy
-  image: google/cloud-sdk:latest
-  script:
-    - echo $GCP_SERVICE_ACCOUNT_KEY | base64 -d > gcp-service-account.json
-    - gcloud auth activate-service-account --key-file gcp-service-account.json
-    - gcloud container clusters get-credentials ordermgmtsystem --zone us-east1
-    - kubectl apply -f deployment.yaml
-    - kubectl apply -f service.yaml
-  only:
-    - main
+      # Update Kubernetes Deployment with Docker Hub image
+      - name: Deploy
+        run: |
+          kubectl set image deployment/my-app-deployment \
+            my-app-container=docker.io/1025software/ordermgmtexpress:latest
+          kubectl rollout status deployment/my-app-deployment
