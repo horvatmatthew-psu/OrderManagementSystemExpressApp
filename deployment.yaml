@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: order-management-app
-        image: 1025software/ordermgmtexpress:latest
+        image: your-dockerhub-username/ordermgmtexpress:latest
         ports:
         - containerPort: 3000
         volumeMounts:
@@ -42,17 +42,3 @@ spec:
       - name: sqlite-storage
         persistentVolumeClaim:
           claimName: sqlite-storage
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: order-management-service
-  namespace: my-app
-spec:
-  selector:
-    app: order-management-app
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 3000
-  type: LoadBalancer

@@ -42,7 +42,8 @@ jobs:
 
       - name: Deploy to GKE
         run: |
-          kubectl apply -f gke-deployment.yaml --validate=false
+          kubectl apply -f deployment.yaml --validate=false
+          kubectl apply -f service.yaml --validate=false
 
       - name: Verify deployment
         run: |
