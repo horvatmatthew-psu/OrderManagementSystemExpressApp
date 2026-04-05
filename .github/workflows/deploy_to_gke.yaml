@@ -31,6 +31,9 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Install GKE auth plugin
+        run: gcloud components install gke-gcloud-auth-plugin --quiet
+
       - name: Configure kubectl
         run: |
           gcloud container clusters get-credentials ${{ secrets.GKE_CLUSTER_NAME }} \
@@ -46,15 +49,3 @@ jobs:
           kubectl rollout status deployment/my-app-deployment -n my-app --timeout=5m
           kubectl get pods -n my-app
           kubectl get svc -n my-app
-
-      - name: Trigger Docker Build and Push
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'build_docker.yaml',
-              ref: 'main'
-            })
