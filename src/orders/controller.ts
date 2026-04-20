@@ -14,9 +14,12 @@ export const getAllOrders = async () => {
 
 export const addNewOrder = async (customerName: string, totalAmount: number) => {
     try {
+        if (!customerName || customerName.trim() === '') {
+            throw new Error("Customer name is required");
+        }
         const orderDate = new Date();
         const status = "Pending";
-         await new Promise(resolve => 
+         await new Promise(resolve =>
             setTimeout(resolve, 2000)).then(async() => {
             const newOrder = await Order.create({ customerName, orderDate, totalAmount, status });
             return newOrder;
