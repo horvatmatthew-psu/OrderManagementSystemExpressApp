@@ -53,8 +53,7 @@ export const patchOrderById = async (id: string, updateData: any) => {
     try {
         const order = await Order.findByPk(id);
         if (order) {
-            const tempOrder = { ... order, ...updateData };
-            await order.update(tempOrder);
+            await order.update(updateData);
             return { success: true, data: order };
         } else {
             return { success: false, message: "Order not found" };
