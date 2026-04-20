@@ -20,7 +20,6 @@ app.set('trust proxy', true);
 
 // Enable CORS for browser clients
 app.use(cors({ origin: true, credentials: true }));
-app.options('*', cors({ origin: true, credentials: true }));
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -43,7 +42,11 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Hello, TypeScript + Express!');
 });
 
-// Start the server
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is running on http://0.0.0.0:${port}`);
-});
+export default app;
+
+// Start the server only if not in test mode
+if (process.env.NODE_ENV !== 'test') {
+    app.listen(port, '0.0.0.0', () => {
+        console.log(`Server is running on http://0.0.0.0:${port}`);
+    });
+}
