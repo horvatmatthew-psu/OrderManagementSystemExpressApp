@@ -30,7 +30,7 @@ describe('Order Controller', () => {
       const result = await OrderController.getAllOrders();
       expect(result).toEqual(mockOrders);
       expect(mockOrder.findAll).toHaveBeenCalledTimes(1);
-    });
+    });  
 
     it('should throw error on failure', async () => {
       mockOrder.findAll.mockRejectedValue(new Error('DB Error'));
@@ -96,7 +96,7 @@ describe('Order Controller', () => {
 
   describe('addNewOrder', () => {
     it('should create a new order', async () => {
-      const mockNewOrder = { id: 1, customerName: 'New', totalAmount: 100 };
+      const mockNewOrder = { customerName: 'New', totalAmount: 100 };
       mockOrder.create.mockResolvedValue(mockNewOrder);
 
       // Mock setTimeout to resolve immediately for testing
@@ -113,5 +113,15 @@ describe('Order Controller', () => {
       });
       jest.useRealTimers();
     });
+
+    it('should throw error if customer name is missing', async () => {
+      await expect(OrderController.addNewOrder('', 100)).rejects.toThrow('Error creating new order: Error: Customer name is required');
+    });
+
+    it('should throw error if customer name is only whitespace', async () => {
+      await expect(OrderController.addNewOrder('   ', 100)).rejects.toThrow('Error creating new order: Error: Customer name is required');
+    });
   });
+
+ 
 });
