@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Stop the Node.js app
+      command: pm2 stop order-management-system
+      ignore_errors: yes
+
+    - name: Delete PM2 process
+      command: pm2 delete order-management-system
+      ignore_errors: yes
+
+    - name: Remove the application directory
+      file:
+        path: /home/ansiblemachine/order-management-system-express-app
+        state: absent

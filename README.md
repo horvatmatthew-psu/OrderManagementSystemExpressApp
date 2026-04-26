@@ -8,6 +8,55 @@ Repository For Module 9 Assignment to Create a Order Management System for CSC82
 
 *The application creates a sqlite database stored in the storage directory, that is gitignored, to keep the database local only.*
 
+## Ansible Deployment
+
+### Install Ansible On Local Machine
+
+### Provision VM (Ubuntu OS)
+
+
+
+### Deploy Playbook
+
+*ansible-playbook -i "IP VM ADDRESS," -u ansiblemachine --private-key /path/to/privatekey.pem ansibleplaybooks/deploy.yaml*
+
+### Rollback Playbook
+
+*ansible-playbook -i "IP VM ADDRESS," -u ansiblemachine --private-key /path/to/privatekey.pem ansibleplaybooks/rollback.yaml*
+
+### Test Verification Script
+
+*chmod +x /ansibleplaybooks/test.sh. [makes script executable]*
+
+*./ansibleplaybooks/test.sh VM_IP_ADDRESS*
+
+Result of Testing
+
+* PASS: GET /orders
+* PASS: POST /orders (valid)
+* PASS: POST /orders (invalid validation)
+* PASS: Extract order ID
+* PASS: GET /orders/:id
+* PASS: GET /orders/:id (not found)
+* PASS: PATCH /orders/:id
+* PASS: DELETE /orders/:id
+* PASS: DELETE non-existent order
+
+* Passed: 9
+* Failed: 0
+
+## Access Deployed Application
+
+### Url
+http://20.51.174.150:3000/
+
+### API Docs
+http://20.51.174.150:3000/api-docs/
+
+## Issues and Limitations
+* Make sure Ansible is installed on the local or control system
+* Make sure the firewall on the vm is open to port 3000
+* Challenges involved the deploy script and making sure the right paths were deployed and the correct commands are called to execute the application
 
 API documentation for Order App
 

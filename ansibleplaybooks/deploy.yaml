@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Node.js and npm
+      apt:
+        name: 
+          - nodejs
+          - npm
+        state: present
+   
+    - name: Sync project to remote host
+      synchronize:
+        src: ../../OrderManagementSystemExpressApp/
+        dest: /home/ansiblemachine/order-management-system-express-app/
+        delete: yes
+
+    - name: Install app dependencies
+      npm:
+        path: /home/ansiblemachine/order-management-system-express-app
+        state: present
+
+    - name: Build the application
+      command: npm run build
+      args:
+        chdir: /home/ansiblemachine/order-management-system-express-app
+
+    - name: Install PM2 globally
+      npm:
+        name: pm2
+        global: yes
+        state: present
+
+    - name: Start the Node.js app with PM2
+      command: pm2 start npm --name "order-management-system" -- start
+      args:
+        chdir: /home/ansiblemachine/order-management-system-express-app
